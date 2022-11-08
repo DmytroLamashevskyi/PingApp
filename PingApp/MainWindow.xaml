@@ -1,0 +1,123 @@
+﻿<Window x:Class="PingApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PingApp" xmlns:converters="clr-namespace:PingApp.Converters"
+        mc:Ignorable="d"
+        Title="Ping Monitoring" Height="450" Width="800" Closing="Window_Closing" Icon="/ping-icon-28.jpg">
+    <Window.Resources>
+        <BitmapImage x:Key="RestartImg" UriSource="/Img/Restart.png"/>
+        <BitmapImage x:Key="StartImg" UriSource="/Img/Start.png"/>
+        <BitmapImage x:Key="StopImg" UriSource="/Img/Stop.png"/>
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:BoolToColorBrushConverter x:Key="BoolToColor" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="_Program">
+                <MenuItem Header="_Open File Settings" Click="MenuItem_Click_3" />
+                <MenuItem Header="_Exit" Click="MenuItem_Click_2" />
+            </MenuItem>
+            <MenuItem Header="_Pings">
+                <MenuItem Header="_Start All" Click="MenuItem_Click_1">
+                    <MenuItem.Icon>
+                        <Image Source="/Img/Start.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Stop All" Click="MenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Img/Stop.png" />
+                    </MenuItem.Icon>
+                </MenuItem> 
+            </MenuItem>
+            <MenuItem Header="_Help" Click="MenuItem_Click_4">
+            </MenuItem>
+        </Menu>
+        <Grid  Grid.Row="1" >
+            <TextBox VerticalAlignment="Center" x:Name="CommandTextBox" KeyDown="CommandTextBox_KeyDown" />
+            <TextBlock IsHitTestVisible="False" Text="Enter Command" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, ElementName=CommandTextBox}" Value="">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+
+        <DataGrid x:Name="PingDataInfo" Grid.Row="2" IsReadOnly="True" AutoGenerateColumns="False"  >
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="StartBtn" Click="StartBtn_Click" >
+                                <DockPanel>
+                                    <Image Source="{StaticResource ResourceKey=StartImg}" Height="16" Width="16" />
+                                </DockPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="StoptBtn" Click="StoptBtn_Click" Command="{Binding Name}" >
+                                <DockPanel>
+                                    <Image Source="{StaticResource ResourceKey=StopImg}" Height="16" Width="16"/>
+                                </DockPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="RestartBtn" Click="RestartBtn_Click" >
+                                <DockPanel>
+                                    <Image Source="{StaticResource ResourceKey=RestartImg}" Height="16" Width="16"/>
+                                </DockPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Ping" Binding="{Binding Ping}"/>
+                <DataGridTextColumn Header="Last Connection" Binding="{Binding LastConnection}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}"/> 
+                <DataGridTemplateColumn Header="IsRunning"  >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <Ellipse  HorizontalAlignment="Center"  Height="15" Margin="0,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="15" >
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                <Setter Property="Fill" Value="Green" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsRunning}" Value="False">
+                                                <Setter Property="Fill" Value="Red" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StatusBar Grid.Row="3"/>
+
+    </Grid>
+</Window>
