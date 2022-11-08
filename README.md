@@ -16,7 +16,7 @@ In this project used Thread to run Ping sygnals and updated DataGrid in realtime
 Current version of App
 ![New Version](https://github.com/DmytroLamashevskyi/PingApp/blob/master/ImageData/NewApp.png?raw=true)
 
-Idea version located in [PingI](https://github.com/DmytroLamashevskyi/PingApp/tree/master/PingI) folder.
+Idea version located in [PingI](https://github.com/DmytroLamashevskyi/PingApp/tree/master/PingI) folder.\
 ![New Version](https://github.com/DmytroLamashevskyi/PingApp/blob/master/ImageData/OldVersion.png?raw=true)
 
 ## Tech Stack
